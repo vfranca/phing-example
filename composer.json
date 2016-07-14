@@ -1,0 +1,25 @@
+{
+    "name": "valmirfranca/phing_template",
+    "description": "Projeto de compilacao com Phing",
+    "type": "project",
+    "require-dev": {
+        "phing/phing": "^2.14",
+        "phpunit/phpunit": "^4.8",
+        "pdepend/pdepend": "^2.2",
+        "phpmd/phpmd": "^2.4",
+        "phploc/phploc": "^2.1",
+        "sebastian/phpcpd": "^2.0",
+        "squizlabs/php_codesniffer": "^2.6",
+        "theseer/phpdox": "0.8.1.1"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Valmir Franca da Silva",
+            "email": "valmirfrancadasilva@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+    }
+}

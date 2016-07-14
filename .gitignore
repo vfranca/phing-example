@@ -1,0 +1,8 @@
+.project
+.settings
+.buildpath
+.vagrant
+vendor/
+build/*
+!build/phpcs.xml
+!build/phpmd.xml
