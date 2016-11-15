@@ -1,4 +1,4 @@
-# Phing Template
+# Phing Boilerplate
 
-Template de compilacao dew um projeto PHP
+Boilerplate para compilação de projetos PHP.
 Adaptado do template PHP para Jenkins de Sebastian Bergman
