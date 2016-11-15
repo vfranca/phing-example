@@ -6,3 +6,4 @@ vendor/
 build/*
 !build/phpcs.xml
 !build/phpmd.xml
+!build/phpunit.xml
