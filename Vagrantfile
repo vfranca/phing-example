@@ -9,7 +9,5 @@ Vagrant.configure(2) do |config|
   end
   config.vm.provision "shell", inline: <<-SHELL
     sudo apt-get -y install php5-xdebug
-    git config --global user.name "Valmir França"
-    git config --global user.email valmirfrasi@gmail.com
   SHELL
 end
