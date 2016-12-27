@@ -1,7 +1,17 @@
 {
-    "name": "valmirfranca/phing_template",
+    "name": "vfranca/phing-sample",
     "description": "Projeto de compilacao com Phing",
     "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Valmir Franca",
+            "email": "valmirfrasi@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.20"
+    },
     "require-dev": {
         "phing/phing": "^2.14",
         "phpunit/phpunit": "^4.8",
@@ -10,16 +20,13 @@
         "phploc/phploc": "^2.1",
         "sebastian/phpcpd": "^2.0",
         "squizlabs/php_codesniffer": "^2.6",
-        "theseer/phpdox": "0.8.1.1"
+        "phpdocumentor/phpdocumentor": "^2.9",
+        "mockery/mockery": "^0.9.6"
     },
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Valmir Franca da Silva",
-            "email": "valmirfrancadasilva@gmail.com"
+    "autoload": {
+        "psr-4": {
+            "MyPackage\\": "src/"
         }
-    ],
-    "minimum-stability": "stable",
-    "require": {
-    }
+    },
+    "minimum-stability": "stable"
 }

@@ -1,14 +1,13 @@
 <?php
-use PHPUnit_Framework_TestCase as PHPUnit;
-use App\Calculator;
+use MyPackage\Calculator;
 
-class CalculatorTest extends PHPUnit
+class CalculatorTest extends \PHPUnit_Framework_TestCase
 {
     protected $calc;
 
     public function setup() 
     {
-        $this->calc = new \App\Calculator();
+        $this->calc = new Calculator();
     }
 
     public function testAdd() 
@@ -18,6 +17,6 @@ class CalculatorTest extends PHPUnit
 
     public function testSubtract() 
     {
-        $this->assertEquals(4, $this->calc->subtract(6, 2), 'A subtração está incorreta');
+        $this->assertEquals(4, $this->calc->subtract(6, 2), 'A subtraï¿½ï¿½o estï¿½ incorreta');
     }
 }

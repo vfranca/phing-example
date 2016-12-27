@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="projectName" default="full-build">
+<project name="mypackage" default="full-build">
+    <property name="dist.file" value="${phing.project.name}-0.1.zip" />
     <property name="pdepend" value="vendor/bin/pdepend"/>
     <property name="phpcpd"  value="vendor/bin/phpcpd"/>
     <property name="phpcs"   value="vendor/bin/phpcs"/>
-    <property name="phpdox"  value="vendor/bin/phpdox"/>
+    <property name="phpdoc"  value="vendor/bin/phpdoc"/>
     <property name="phploc"  value="vendor/bin/phploc"/>
     <property name="phpmd"   value="vendor/bin/phpmd"/>
     <property name="phpunit" value="vendor/bin/phpunit"/>
@@ -11,16 +12,40 @@
     <property name="dir.tests" value="${project.basedir}/tests" />
 
     <target name="full-build"
-         depends="prepare,static-analysis,phpunit,phpdox,-check-failure"
-         description="Performs static analysis, runs the tests, and generates project documentation"/>
+        depends="prepare,static-analysis,phpunit,phpdoc,-check-failure,make-dist"
+        description="Performs static analysis, runs the tests, and generates project documentation"/>
 
     <target name="full-build-parallel"
-         depends="prepare,static-analysis-parallel,phpunit,phpdox,-check-failure"
-         description="Performs static analysis (executing the tools in parallel), runs the tests, and generates project documentation"/>
+        depends="prepare,static-analysis-parallel,phpunit,phpdoc,-check-failure,make-dist"
+        description="Performs static analysis (executing the tools in parallel), runs the tests, and generates project documentation"/>
 
     <target name="quick-build"
-         depends="prepare,lint,phpunit-no-coverage"
-         description="Performs a lint check and runs the tests (without generating code coverage reports)"/>
+        depends="prepare,lint,phpunit-no-coverage,make-dist"
+        description="Performs a lint check and runs the tests (without generating code coverage reports)"/>
+         
+    <target 
+        unless="make-dist.done"
+        name="make-dist" 
+        description="Make the distribution package">
+    <copy todir="${project.basedir}/build/dist">
+        <fileset dir=".">
+            <include name="src/**" />
+            <include name="composer**" />
+        </fileset>
+    </copy>
+    <exec executable="composer">
+        <arg value="install" />
+        <arg value="-d" />
+        <arg value="build/dist" />
+        <arg value="--no-dev" />
+    </exec>
+    <zip destfile="${project.basedir}/build/${dist.file}">
+        <fileset dir="${project.basedir}/build/dist">
+            <exclude name="composer**" />
+        </fileset>
+    </zip>
+    <property name="make-dist.done" value="true" />
+    </target>
 
     <target name="static-analysis"
          depends="lint,phploc-ci,pdepend,phpmd-ci,phpcs-ci,phpcpd-ci"
@@ -44,11 +69,13 @@
     <target name="clean"
          unless="clean.done"
          description="Cleanup build artifacts">
-        <delete dir="${project.basedir}/build/api"/>
-        <delete dir="${project.basedir}/build/coverage"/>
-        <delete dir="${project.basedir}/build/logs"/>
-        <delete dir="${project.basedir}/build/pdepend"/>
-        <delete dir="${project.basedir}/build/phpdox"/>
+        <delete dir="${project.basedir}/build/api" />
+        <delete dir="${project.basedir}/build/coverage" />
+        <delete dir="${project.basedir}/build/logs" />
+        <delete dir="${project.basedir}/build/pdepend" />
+        <delete dir="${project.basedir}/build/phpdoc" />
+        <delete dir="${project.basedir}/build/dist" />
+        <delete file="${project.basedir}/build/${dist.file}" />
         <property name="clean.done" value="true"/>
     </target>
 
@@ -60,7 +87,7 @@
         <mkdir dir="${project.basedir}/build/coverage"/>
         <mkdir dir="${project.basedir}/build/logs"/>
         <mkdir dir="${project.basedir}/build/pdepend"/>
-        <mkdir dir="${project.basedir}/build/phpdox"/>
+        <mkdir dir="${project.basedir}/build/phpdoc"/>
         <property name="prepare.done" value="true"/>
     </target>
 
@@ -231,13 +258,13 @@
         <property name="phpunit.done" value="true"/>
     </target>
 
-    <target name="phpdox"
-         unless="phpdox.done"
+    <target name="phpdoc"
+         unless="phpdoc.done"
          depends="phploc-ci,phpcs-ci,phpmd-ci"
          description="Generate project documentation using phpDox">
-        <exec executable="${phpdox}" dir="${project.basedir}/build" taskname="phpdox"/>
+        <exec executable="${phpdoc}" dir="${project.basedir}/build" taskname="phpdoc"/>
 
-        <property name="phpdox.done" value="true"/>
+        <property name="phpdoc.done" value="true"/>
     </target>
 
     <target name="-check-failure">
