@@ -1,15 +1,22 @@
 # Phing Sample
 
-Sample para build de pacotes PHP.
-## Requirements
-* Composer
+Exemplo de aplicação do Phing.
 
-## Usage
-```sh
-git clone <repository>
-cd <repository>
+```
 composer install
-vendor/bin/phing
 ```
 
-Isso irá criar o artefato build/mypackage-0.1.zip
+Instala as dependências.
+
+```
+composer build
+```
+
+Executa a compilação.
+
+```
+composer test
+```
+
+Executa testes automatizados.
+
